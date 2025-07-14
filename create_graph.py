@@ -12,7 +12,6 @@ def create_graph(devices, router_ip):
         G.add_node(device_ip)
         G.add_edge(router_ip, device_ip)
 
-    # Son olarak grafiği çiz
     nx.draw(G, with_labels=True, node_color='skyblue', node_size=1500, font_size=10)
     plt.title("Network Topology Map")
     plt.show()
