@@ -1,6 +1,8 @@
 import socket
 import ipaddress
 from inventory_scanner import scan_inventory
+from network_mapper import get_gateway_ip
+from create_graph import create_graph
 
 def get_subnet():
     ip_range_choose = input("1'e basarsan: Ip aralığını kendin belirler.\n2'ye basarsan: Program otomatik olarak Ip aralığını belirler.")
@@ -31,3 +33,6 @@ if __name__ == "__main__":
     include_vendor = input("Vendor bilgisi alınsın mı? (e/h): ").lower() == "e"
     devices = scan_inventory(subnet, include_vendor)
     print_devices(devices)
+
+    router_ip = get_gateway_ip()
+    create_graph(devices, router_ip)

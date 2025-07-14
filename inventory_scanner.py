@@ -1,13 +1,13 @@
 import scapy
-
+from scapy.all import ARP, Ether, srp
+from vendor_lookup import get_mac_vendor
 import socket
 import ipaddress
 
 
 # ARP isteği gönderip cevap alan fonksiyon
 def scan_inventory(subnet, include_vendor=True): # include_vendor: True ise vendor bilgisi döndürür, False ise döndürmez
-    from scapy.all import ARP, Ether, srp
-    from vendor_lookup import get_mac_vendor
+
     pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=subnet) # Ether: Ethernet paketi, ARP: ARP paketi
     answered, _ = srp(pkt, timeout=2, verbose=False) # srp: Send and Receive Packet
     
@@ -27,20 +27,4 @@ def scan_inventory(subnet, include_vendor=True): # include_vendor: True ise vend
     return devices # cihazların bilgilerini döndür
 
 
-"""# ARP isteği gönderip cevap alan fonksiyon
-def scan_inventory(subnet):
-    # Broadcast paketle tüm cihazlara ARP isteği gönder
-    pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=subnet) # Ether: Ethernet paketi, ARP: ARP paketi
-    answered, _ = srp(pkt, timeout=2, verbose=False) # srp: Send and Receive Packet
-    
-    devices = []
-    for _, rcv in answered: # _: answered'ın ilk elemanı, rcv: answered'ın ikinci elemanı
-        devices.append({
-            "ip": rcv.psrc,
-            "mac": rcv.hwsrc
-            "vendor": vendor
-        })
-    
-    
-    return devices"""
 

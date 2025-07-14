@@ -1,7 +1,6 @@
 import netifaces
 
-def get_gatwey_ip():
+# Gateway IP adresini alan fonksiyon
+def get_gateway_ip():
     gw = netifaces.gateways()
-    print(gw['default'][netifaces.AF_INET][0])
-
-get_gatwey_ip()
+    return gw['default'][netifaces.AF_INET][0] # gw['default'][netifaces.AF_INET][0]: Gateway IP adresi
