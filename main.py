@@ -30,7 +30,7 @@ def print_devices(devices):
     for device in devices:
         print(f"IP: {device['ip']} | MAC: {device['mac']} | Vendor: {device['vendor']}")
 
-
+# Ana fonksiyon
 if __name__ == "__main__":
     # Ağ tarama
     subnet = get_subnet()
