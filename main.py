@@ -3,7 +3,10 @@ import ipaddress
 from inventory_scanner import scan_inventory
 from network_mapper import get_gateway_ip
 from create_graph import create_graph
+from security_checks.icmp_ping import icmp_ping
+from security_checks.port_scanner import scan_ports
 
+# Ağ aralığını belirleme
 def get_subnet():
     ip_range_choose = input("1'e basarsan: Ip aralığını kendin belirler.\n2'ye basarsan: Program otomatik olarak Ip aralığını belirler.")
 
@@ -21,7 +24,7 @@ def get_subnet():
         exit()  # Programı sonlandır
     return subnet
 
-
+ # Ağ cihazlarının bilgilerini ekrana yazdır
 def print_devices(devices):
     print("\nTarama Sonuçları:")
     for device in devices:
@@ -29,10 +32,19 @@ def print_devices(devices):
 
 
 if __name__ == "__main__":
+    # Ağ tarama
     subnet = get_subnet()
     include_vendor = input("Vendor bilgisi alınsın mı? (e/h): ").lower() == "e"
     devices = scan_inventory(subnet, include_vendor)
     print_devices(devices)
 
+    # Grafik oluşturma
     router_ip = get_gateway_ip()
     create_graph(devices, router_ip)
+ 
+    # ICMP ping işlemi
+    ip_list = [device["ip"] for device in devices]
+    icmp_ping(ip_list)
+
+    # Port tarama
+    scan_ports(ip_list)
